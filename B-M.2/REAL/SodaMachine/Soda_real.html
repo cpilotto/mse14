@@ -1,0 +1,1279 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<HTML>
+<HEAD>
+<TITLE>Soda Machine System</TITLE>
+<link href="real.css" rel="stylesheet" type="text/css">
+<STYLE type="text/css">BODY,H1,H2,H3,H4,H5,H6,P,CENTER,TD,TH,UL,DL,DIV {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+}
+H2  {
+	background: rgb(176, 196, 222);
+}
+H1 {
+	background: rgb( 70, 130, 180);
+	text-align: center;
+}
+TH  {
+	background: rgb(176, 226, 255);
+}
+BODY {
+	background: white;
+	color: black;
+	margin-right: 20px;
+	margin-left: 20px;
+}
+a  {
+	color: #252E78;
+}
+a:visited {
+	color: #3D2185;
+}
+a:hover {
+	font-weight:bold;
+}
+ul  {
+	list-style-type: none;	margin: 1em 0 1em 0px;}
+</STYLE></HEAD>
+<BODY BGCOLOR='white' TEXT='black'
+LINK='blue' VLINK='blue'
+ALINK='green'>
+<H1>
+Soda Machine System</H1>
+<H2>Specification of the Soda Machine System</H2>
+<H2>Table Of Contents</H2>
+<LI><A href="#REQUIREMENTS">Requirements</A href="#REQUIREMENTS"></LI>
+<LI><A href="#STIMULI">Stimuli</A href="#STIMULI"></LI>
+<LI><A href="#OUTPUTS">Outputs</A href="#OUTPUTS"></LI>
+<LI><A href="#INTERFACES">Interfaces</A href="#INTERFACES"></LI>
+<LI><A href="#NAMEDRESPONSES">Named Responses</A href="#NAMEDRESPONSES"></LI>
+<LI><A href="#PREDICATES">Predicates</A href="#PREDICATES"></LI>
+<LI><A href="#ENUMERATION">Sequence Enumeration</A href="#ENUMERATION"></LI>
+<UL>
+<LI><A href="#LENGTH1">Length 1</A></LI>
+<LI><A href="#LENGTH2">Length 2</A></LI>
+<LI><A href="#LENGTH3">Length 3</A></LI>
+<LI><A href="#LENGTH4">Length 4</A></LI>
+<LI><A href="#LENGTH5">Length 5</A></LI>
+</UL>
+<LI><A href="#VARIABLES">State Variables</A></LI>
+<LI><A href="#CSA">Canonical Sequence Analysis</A></LI>
+<LI><A href="#STATEBOX">State Box Specification</A></LI>
+</UL>
+<H1 id="REQUIREMENTS">Requirements</H1>
+<UL>
+<LI id="REQ1"><b>1:</b> The soda machine will produce a soda after 75 cents has been entered. The machine will only accept quarters.</LI>
+<LI id="REQ2"><b>2:</b> When the "Change Return" button is pressed, the available change in the input tray is returned.</LI>
+<LI id="REQ3"><b>3:</b> When there is no more soda in the machine, the "Sold Out" light will be illuminated.</LI>
+<LI id="REQ4"><b>4:</b> </LI>
+<LI id="REQD1"><b>D1:</b> Selecting a soda before the correct change has been entered will result in no response from the soda machine.</LI>
+<LI id="REQD2"><b>D2:</b> A "Sold Out" stimulus before the last soda is selected will cause the "Sold Out" light to be illuminated.</LI>
+<LI id="REQD3"><b>D3:</b> Whenever the "Sold Out" light is illuminated, any change deposited into the machine will automatically be returned.</LI>
+<LI id="REQD4"><b>D4:</b> The soda select button will be ignored whenever the "Sold Out" light is on or whenever correct change has not been received.</LI>
+<LI id="REQD5"><b>D5:</b> </LI>
+<LI id="REQD6"><b>D6:</b> </LI>
+</UL>
+<H1 id="INTERFACES">Interfaces</H1>
+<UL>
+<LI id="INTERFACEChange-Return-Button"><b>Change-Return-Button</b></LI>
+<UL>
+<LI>Description: The button used to request the change return.</LI>
+<LI>Requirement Trace: [<A href="#REQ2" title="When the &quot;Change Return&quot; button is pressed, the available change in the input tray is returned.">2</A>]
+</LI>
+</UL>
+<LI id="INTERFACEChange-Tray"><b>Change-Tray</b></LI>
+<UL>
+<LI>Description: The tray used to collect the change after it has been requested.</LI>
+<LI>Requirement Trace: [<A href="#REQ2" title="When the &quot;Change Return&quot; button is pressed, the available change in the input tray is returned.">2</A>]
+</LI>
+</UL>
+<LI id="INTERFACEPower-Button"><b>Power-Button</b></LI>
+<UL>
+<LI>Description: The button used to initialize the machine.</LI>
+<LI>Requirement Trace: [<A href="#REQ4" title="">4</A>]
+</LI>
+</UL>
+<LI id="INTERFACEPower-Light"><b>Power-Light</b></LI>
+<UL>
+<LI>Description: The light that indicates that machine is powered.</LI>
+<LI>Requirement Trace: [<A href="#REQ4" title="">4</A>]
+</LI>
+</UL>
+<LI id="INTERFACEQuarter-In"><b>Quarter-In</b></LI>
+<UL>
+<LI>Description: The input in which the quarters are inserted.</LI>
+<LI>Requirement Trace: [<A href="#REQ1" title="The soda machine will produce a soda after 75 cents has been entered. The machine will only accept quarters.">1</A>]
+</LI>
+</UL>
+<LI id="INTERFACESoda-Out"><b>Soda-Out</b></LI>
+<UL>
+<LI>Description: The tray used to collect the soda selected from the machine.</LI>
+<LI>Requirement Trace: [<A href="#REQ1" title="The soda machine will produce a soda after 75 cents has been entered. The machine will only accept quarters.">1</A>]
+</LI>
+</UL>
+<LI id="INTERFACESoda-Select-Button"><b>Soda-Select-Button</b></LI>
+<UL>
+<LI>Description: The button used to select the soda.</LI>
+<LI>Requirement Trace: [<A href="#REQ1" title="The soda machine will produce a soda after 75 cents has been entered. The machine will only accept quarters.">1</A>]
+</LI>
+</UL>
+<LI id="INTERFACESold-Out-Indication"><b>Sold-Out-Indication</b></LI>
+<UL>
+<LI>Description: The internal indication that the last soda in the machine has been delivered.</LI>
+<LI>Requirement Trace: [<A href="#REQ3" title="When there is no more soda in the machine, the &quot;Sold Out&quot; light will be illuminated.">3</A>]
+</LI>
+</UL>
+<LI id="INTERFACESold-Out-Light"><b>Sold-Out-Light</b></LI>
+<UL>
+<LI>Description: The light that indicates that the soda has been sold out.</LI>
+<LI>Requirement Trace: [<A href="#REQ3" title="When there is no more soda in the machine, the &quot;Sold Out&quot; light will be illuminated.">3</A>]
+</LI>
+</UL>
+</UL>
+<H1 id="STIMULI">Stimuli</H1>
+<UL>
+<LI id="STIMCR"><b>CR</b></LI>
+<UL>
+<LI>Long Name: Change Return</LI><LI>Description: The change return button has been pressed.</LI>
+<LI>Sources: [<A href="#INTERFACEChange-Return-Button">Change-Return-Button</A>]</LI><LI>Requirement Trace: [<A href="#REQ2" title="When the &quot;Change Return&quot; button is pressed, the available change in the input tray is returned.">2</A>]
+</LI>
+</UL>
+<LI id="STIMI"><b>I</b></LI>
+<UL>
+<LI>Long Name: Initialize</LI><LI>Description: The power button has been pressed.</LI>
+<LI>Sources: [<A href="#INTERFACEPower-Button">Power-Button</A>]</LI><LI>Requirement Trace: [<A href="#REQ4" title="">4</A>]
+</LI>
+</UL>
+<LI id="STIMQ"><b>Q</b></LI>
+<UL>
+<LI>Long Name: Quarter</LI><LI>Description: Money has been inserted into the machine.</LI>
+<LI>Sources: [<A href="#INTERFACEQuarter-In">Quarter-In</A>]</LI><LI>Requirement Trace: [<A href="#REQ1" title="The soda machine will produce a soda after 75 cents has been entered. The machine will only accept quarters.">1</A>]
+</LI>
+</UL>
+<LI id="STIMSO"><b>SO</b></LI>
+<UL>
+<LI>Long Name: Sold Out</LI><LI>Description: The last soda has been sold.</LI>
+<LI>Sources: [<A href="#INTERFACESold-Out-Indication">Sold-Out-Indication</A>]</LI><LI>Requirement Trace: [<A href="#REQ3" title="When there is no more soda in the machine, the &quot;Sold Out&quot; light will be illuminated.">3</A>]
+</LI>
+</UL>
+<LI id="STIMSS"><b>SS</b></LI>
+<UL>
+<LI>Long Name: Soda Select</LI><LI>Description: The soda select button has been pressed.</LI>
+<LI>Sources: [<A href="#INTERFACESoda-Select-Button">Soda-Select-Button</A>]</LI><LI>Requirement Trace: [<A href="#REQ1" title="The soda machine will produce a soda after 75 cents has been entered. The machine will only accept quarters.">1</A>]
+</LI>
+</UL>
+</UL>
+<H1 id="OUTPUTS">Outputs</H1>
+<UL>
+<LI id="OUTPUTCHR"><b>CHR</b></LI>
+<UL>
+<LI>Long Name: Change Return</LI><LI>Description: The change is returned to the customer.</LI>
+<LI>Destinations: [<A href="#INTERFACEChange-Tray">Change-Tray</A>]</LI><LI>Requirement Trace: [<A href="#REQ2" title="When the &quot;Change Return&quot; button is pressed, the available change in the input tray is returned.">2</A>]
+</LI>
+</UL>
+<LI id="OUTPUTLIGHT"><b>LIGHT</b></LI>
+<UL>
+<LI>Long Name: Power-on Light</LI><LI>Description: The power-on light is turned on.</LI>
+<LI>Destinations: [<A href="#INTERFACEPower-Light">Power-Light</A>]</LI><LI>Requirement Trace: [<A href="#REQ4" title="">4</A>]
+</LI>
+</UL>
+<LI id="OUTPUTSD"><b>SD</b></LI>
+<UL>
+<LI>Long Name: Soda Deposited</LI><LI>Description: The soda is deposited in the tray.</LI>
+<LI>Destinations: [<A href="#INTERFACESoda-Out">Soda-Out</A>]</LI><LI>Requirement Trace: [<A href="#REQ1" title="The soda machine will produce a soda after 75 cents has been entered. The machine will only accept quarters.">1</A>]
+</LI>
+</UL>
+<LI id="OUTPUTSOL"><b>SOL</b></LI>
+<UL>
+<LI>Long Name: Sold-out Light</LI><LI>Description: The sold-out light is turned on.</LI>
+<LI>Destinations: [<A href="#INTERFACESold-Out-Light">Sold-Out-Light</A>]</LI><LI>Requirement Trace: [<A href="#REQ3" title="When there is no more soda in the machine, the &quot;Sold Out&quot; light will be illuminated.">3</A>]
+</LI>
+</UL>
+</UL>
+<H1 id="NAMEDRESPONSES">Named Responses</H1>
+There are no named responses.
+<UL>
+</UL>
+<H1 id="PREDICATES">Predicates</H1>
+There are no named predicates.
+<UL>
+</UL>
+<H1 id="ENUMERATION">Sequence Enumeration</H1>
+
+<H2 id="LENGTH1">Length 1</H2>
+
+
+<H3 if="&lt;lambda&gt;">Prefix: 
+
+<A href="#<lambda>">&lt;lambda&gt;</A></H3>
+
+
+<TABLE border="2">
+<TR>
+<TH>Stimulus</TH>
+<TH>Response</TH>
+<TH>Response Trace</TH>
+<TH>Equivalence</TH>
+<TH>Equivalence Trace</TH>
+</TR>
+<TR BGCOLOR="#B$CFEC">
+<TD>
+<A href="#STIMCR" title="Change Return">CR</A></TD>
+<TD>
+ILLEGAL
+</TD>
+<TD>
+[]
+</TD>
+<TD>
+ILLEGAL
+</TD>
+<TD>
+[]
+</TD>
+</TR>
+<TR>
+<TD>
+<A href="#STIMI" title="Initialize">I</A></TD>
+<TD>
+<UL>
+<LI>
+<A href="#OUTPUTLIGHT" title="Power-on Light">LIGHT</A>
+</LI>
+</UL>
+</TD>
+<TD>
+[<A href="#REQ4" title="">4</A>]
+</TD>
+<TD>
+<A href="#I">NONE</A>
+</TD>
+<TD>
+[]
+</TD>
+</TR>
+<TR BGCOLOR="#B$CFEC">
+<TD>
+<A href="#STIMQ" title="Quarter">Q</A></TD>
+<TD>
+ILLEGAL
+</TD>
+<TD>
+[]
+</TD>
+<TD>
+ILLEGAL
+</TD>
+<TD>
+[]
+</TD>
+</TR>
+<TR BGCOLOR="#B$CFEC">
+<TD>
+<A href="#STIMSO" title="Sold Out">SO</A></TD>
+<TD>
+ILLEGAL
+</TD>
+<TD>
+[]
+</TD>
+<TD>
+ILLEGAL
+</TD>
+<TD>
+[]
+</TD>
+</TR>
+<TR BGCOLOR="#B$CFEC">
+<TD>
+<A href="#STIMSS" title="Soda Select">SS</A></TD>
+<TD>
+ILLEGAL
+</TD>
+<TD>
+[]
+</TD>
+<TD>
+ILLEGAL
+</TD>
+<TD>
+[]
+</TD>
+</TR>
+</TABLE>
+
+<H2 id="LENGTH2">Length 2</H2>
+
+
+<H3 if="I">Prefix: 
+
+<A href="#I">I</A></H3>
+
+
+<TABLE border="2">
+<TR>
+<TH>Stimulus</TH>
+<TH>Response</TH>
+<TH>Response Trace</TH>
+<TH>Equivalence</TH>
+<TH>Equivalence Trace</TH>
+</TR>
+<TR>
+<TD>
+<A href="#STIMCR" title="Change Return">CR</A></TD>
+<TD>
+<UL>
+<LI>
+<A href="#OUTPUTCHR" title="Change Return">CHR</A>
+</LI>
+</UL>
+</TD>
+<TD>
+[<A href="#REQ2" title="When the &quot;Change Return&quot; button is pressed, the available change in the input tray is returned.">2</A>]
+</TD>
+<TD>
+<A href="#IAAACR">I</A>
+</TD>
+<TD>
+[]
+</TD>
+</TR>
+<TR>
+<TD>
+<A href="#STIMI" title="Initialize">I</A></TD>
+<TD>
+<UL>
+</UL>
+</TD>
+<TD>
+[<A href="#REQ4" title="">4</A>]
+</TD>
+<TD>
+<A href="#IAAAI">I</A>
+</TD>
+<TD>
+[]
+</TD>
+</TR>
+<TR>
+<TD>
+<A href="#STIMQ" title="Quarter">Q</A></TD>
+<TD>
+<UL>
+</UL>
+</TD>
+<TD>
+[<A href="#REQ1" title="The soda machine will produce a soda after 75 cents has been entered. The machine will only accept quarters.">1</A>]
+</TD>
+<TD>
+<A href="#IAAAQ">NONE</A>
+</TD>
+<TD>
+[]
+</TD>
+</TR>
+<TR>
+<TD>
+<A href="#STIMSO" title="Sold Out">SO</A></TD>
+<TD>
+<UL>
+<LI>
+<A href="#OUTPUTSOL" title="Sold-out Light">SOL</A>
+</LI>
+</UL>
+</TD>
+<TD>
+[<A href="#REQD2" title="A &quot;Sold Out&quot; stimulus before the last soda is selected will cause the &quot;Sold Out&quot; light to be illuminated.">D2</A>]
+</TD>
+<TD>
+<A href="#IAAASO">NONE</A>
+</TD>
+<TD>
+[]
+</TD>
+</TR>
+<TR>
+<TD>
+<A href="#STIMSS" title="Soda Select">SS</A></TD>
+<TD>
+<UL>
+</UL>
+</TD>
+<TD>
+[<A href="#REQD1" title="Selecting a soda before the correct change has been entered will result in no response from the soda machine.">D1</A>]
+</TD>
+<TD>
+<A href="#IAAASS">I</A>
+</TD>
+<TD>
+[]
+</TD>
+</TR>
+</TABLE>
+
+<H2 id="LENGTH3">Length 3</H2>
+
+
+<H3 if="IAAAQ">Prefix: 
+
+<A href="#IAAAQ">I.Q</A></H3>
+
+
+<TABLE border="2">
+<TR>
+<TH>Stimulus</TH>
+<TH>Response</TH>
+<TH>Response Trace</TH>
+<TH>Equivalence</TH>
+<TH>Equivalence Trace</TH>
+</TR>
+<TR>
+<TD>
+<A href="#STIMCR" title="Change Return">CR</A></TD>
+<TD>
+<UL>
+<LI>
+<A href="#OUTPUTCHR" title="Change Return">CHR</A>
+</LI>
+</UL>
+</TD>
+<TD>
+[<A href="#REQ2" title="When the &quot;Change Return&quot; button is pressed, the available change in the input tray is returned.">2</A>]
+</TD>
+<TD>
+<A href="#IAAAQAAACR">I</A>
+</TD>
+<TD>
+[]
+</TD>
+</TR>
+<TR>
+<TD>
+<A href="#STIMI" title="Initialize">I</A></TD>
+<TD>
+<UL>
+</UL>
+</TD>
+<TD>
+[<A href="#REQ4" title="">4</A>]
+</TD>
+<TD>
+<A href="#IAAAQAAAI">I</A>
+</TD>
+<TD>
+[]
+</TD>
+</TR>
+<TR>
+<TD>
+<A href="#STIMQ" title="Quarter">Q</A></TD>
+<TD>
+<UL>
+</UL>
+</TD>
+<TD>
+[<A href="#REQ1" title="The soda machine will produce a soda after 75 cents has been entered. The machine will only accept quarters.">1</A>]
+</TD>
+<TD>
+<A href="#IAAAQAAAQ">NONE</A>
+</TD>
+<TD>
+[]
+</TD>
+</TR>
+<TR>
+<TD>
+<A href="#STIMSO" title="Sold Out">SO</A></TD>
+<TD>
+<UL>
+<LI>
+<A href="#OUTPUTSOL" title="Sold-out Light">SOL</A>
+</LI>
+<LI>
+<A href="#OUTPUTCHR" title="Change Return">CHR</A>
+</LI>
+</UL>
+</TD>
+<TD>
+[<A href="#REQD2" title="A &quot;Sold Out&quot; stimulus before the last soda is selected will cause the &quot;Sold Out&quot; light to be illuminated.">D2</A>]
+</TD>
+<TD>
+<A href="#IAAAQAAASO">I.SO</A>
+</TD>
+<TD>
+[]
+</TD>
+</TR>
+<TR>
+<TD>
+<A href="#STIMSS" title="Soda Select">SS</A></TD>
+<TD>
+<UL>
+</UL>
+</TD>
+<TD>
+[<A href="#REQD1" title="Selecting a soda before the correct change has been entered will result in no response from the soda machine.">D1</A>]
+</TD>
+<TD>
+<A href="#IAAAQAAASS">I.Q</A>
+</TD>
+<TD>
+[]
+</TD>
+</TR>
+</TABLE>
+
+<H3 if="IAAASO">Prefix: 
+
+<A href="#IAAASO">I.SO</A></H3>
+
+
+<TABLE border="2">
+<TR>
+<TH>Stimulus</TH>
+<TH>Response</TH>
+<TH>Response Trace</TH>
+<TH>Equivalence</TH>
+<TH>Equivalence Trace</TH>
+</TR>
+<TR>
+<TD>
+<A href="#STIMCR" title="Change Return">CR</A></TD>
+<TD>
+<UL>
+<LI>
+<A href="#OUTPUTCHR" title="Change Return">CHR</A>
+</LI>
+</UL>
+</TD>
+<TD>
+[<A href="#REQD5" title="">D5</A>]
+</TD>
+<TD>
+<A href="#IAAASOAAACR">I.SO</A>
+</TD>
+<TD>
+[]
+</TD>
+</TR>
+<TR>
+<TD>
+<A href="#STIMI" title="Initialize">I</A></TD>
+<TD>
+<UL>
+</UL>
+</TD>
+<TD>
+[<A href="#REQ4" title="">4</A>]
+</TD>
+<TD>
+<A href="#IAAASOAAAI">I</A>
+</TD>
+<TD>
+[]
+</TD>
+</TR>
+<TR>
+<TD>
+<A href="#STIMQ" title="Quarter">Q</A></TD>
+<TD>
+<UL>
+<LI>
+<A href="#OUTPUTCHR" title="Change Return">CHR</A>
+</LI>
+</UL>
+</TD>
+<TD>
+[<A href="#REQD3" title="Whenever the &quot;Sold Out&quot; light is illuminated, any change deposited into the machine will automatically be returned.">D3</A>]
+</TD>
+<TD>
+<A href="#IAAASOAAAQ">I.SO</A>
+</TD>
+<TD>
+[]
+</TD>
+</TR>
+<TR>
+<TD>
+<A href="#STIMSO" title="Sold Out">SO</A></TD>
+<TD>
+<UL>
+</UL>
+</TD>
+<TD>
+[<A href="#REQD6" title="">D6</A>]
+</TD>
+<TD>
+<A href="#IAAASOAAASO">I.SO</A>
+</TD>
+<TD>
+[]
+</TD>
+</TR>
+<TR>
+<TD>
+<A href="#STIMSS" title="Soda Select">SS</A></TD>
+<TD>
+<UL>
+</UL>
+</TD>
+<TD>
+[<A href="#REQD4" title="The soda select button will be ignored whenever the &quot;Sold Out&quot; light is on or whenever correct change has not been received.">D4</A>]
+</TD>
+<TD>
+<A href="#IAAASOAAASS">I.SO</A>
+</TD>
+<TD>
+[]
+</TD>
+</TR>
+</TABLE>
+
+<H2 id="LENGTH4">Length 4</H2>
+
+
+<H3 if="IAAAQAAAQ">Prefix: 
+
+<A href="#IAAAQAAAQ">I.Q.Q</A></H3>
+
+
+<TABLE border="2">
+<TR>
+<TH>Stimulus</TH>
+<TH>Response</TH>
+<TH>Response Trace</TH>
+<TH>Equivalence</TH>
+<TH>Equivalence Trace</TH>
+</TR>
+<TR>
+<TD>
+<A href="#STIMCR" title="Change Return">CR</A></TD>
+<TD>
+<UL>
+<LI>
+<A href="#OUTPUTCHR" title="Change Return">CHR</A>
+</LI>
+</UL>
+</TD>
+<TD>
+[<A href="#REQ2" title="When the &quot;Change Return&quot; button is pressed, the available change in the input tray is returned.">2</A>]
+</TD>
+<TD>
+<A href="#IAAAQAAAQAAACR">I.Q.Q</A>
+</TD>
+<TD>
+[]
+</TD>
+</TR>
+<TR>
+<TD>
+<A href="#STIMI" title="Initialize">I</A></TD>
+<TD>
+<UL>
+</UL>
+</TD>
+<TD>
+[<A href="#REQ4" title="">4</A>]
+</TD>
+<TD>
+<A href="#IAAAQAAAQAAAI">I</A>
+</TD>
+<TD>
+[]
+</TD>
+</TR>
+<TR>
+<TD>
+<A href="#STIMQ" title="Quarter">Q</A></TD>
+<TD>
+<UL>
+</UL>
+</TD>
+<TD>
+[<A href="#REQ1" title="The soda machine will produce a soda after 75 cents has been entered. The machine will only accept quarters.">1</A>]
+</TD>
+<TD>
+<A href="#IAAAQAAAQAAAQ">NONE</A>
+</TD>
+<TD>
+[]
+</TD>
+</TR>
+<TR>
+<TD>
+<A href="#STIMSO" title="Sold Out">SO</A></TD>
+<TD>
+<UL>
+<LI>
+<A href="#OUTPUTCHR" title="Change Return">CHR</A>
+</LI>
+<LI>
+<A href="#OUTPUTSOL" title="Sold-out Light">SOL</A>
+</LI>
+</UL>
+</TD>
+<TD>
+[<A href="#REQD2" title="A &quot;Sold Out&quot; stimulus before the last soda is selected will cause the &quot;Sold Out&quot; light to be illuminated.">D2</A>]
+</TD>
+<TD>
+<A href="#IAAAQAAAQAAASO">I.SO</A>
+</TD>
+<TD>
+[]
+</TD>
+</TR>
+<TR>
+<TD>
+<A href="#STIMSS" title="Soda Select">SS</A></TD>
+<TD>
+<UL>
+</UL>
+</TD>
+<TD>
+[<A href="#REQD4" title="The soda select button will be ignored whenever the &quot;Sold Out&quot; light is on or whenever correct change has not been received.">D4</A>]
+</TD>
+<TD>
+<A href="#IAAAQAAAQAAASS">I.Q.Q</A>
+</TD>
+<TD>
+[]
+</TD>
+</TR>
+</TABLE>
+
+<H2 id="LENGTH5">Length 5</H2>
+
+
+<H3 if="IAAAQAAAQAAAQ">Prefix: 
+
+<A href="#IAAAQAAAQAAAQ">I.Q.Q.Q</A></H3>
+
+
+<TABLE border="2">
+<TR>
+<TH>Stimulus</TH>
+<TH>Response</TH>
+<TH>Response Trace</TH>
+<TH>Equivalence</TH>
+<TH>Equivalence Trace</TH>
+</TR>
+<TR>
+<TD>
+<A href="#STIMCR" title="Change Return">CR</A></TD>
+<TD>
+<UL>
+<LI>
+<A href="#OUTPUTCHR" title="Change Return">CHR</A>
+</LI>
+</UL>
+</TD>
+<TD>
+[<A href="#REQ2" title="When the &quot;Change Return&quot; button is pressed, the available change in the input tray is returned.">2</A>]
+</TD>
+<TD>
+<A href="#IAAAQAAAQAAAQAAACR">I</A>
+</TD>
+<TD>
+[]
+</TD>
+</TR>
+<TR>
+<TD>
+<A href="#STIMI" title="Initialize">I</A></TD>
+<TD>
+<UL>
+</UL>
+</TD>
+<TD>
+[<A href="#REQ4" title="">4</A>]
+</TD>
+<TD>
+<A href="#IAAAQAAAQAAAQAAAI">I</A>
+</TD>
+<TD>
+[]
+</TD>
+</TR>
+<TR>
+<TD>
+<A href="#STIMQ" title="Quarter">Q</A></TD>
+<TD>
+<UL>
+</UL>
+</TD>
+<TD>
+[<A href="#REQ1" title="The soda machine will produce a soda after 75 cents has been entered. The machine will only accept quarters.">1</A>]
+</TD>
+<TD>
+<A href="#IAAAQAAAQAAAQAAAQ">I.Q.Q.Q</A>
+</TD>
+<TD>
+[]
+</TD>
+</TR>
+<TR>
+<TD>
+<A href="#STIMSO" title="Sold Out">SO</A></TD>
+<TD>
+<UL>
+<LI>
+<A href="#OUTPUTCHR" title="Change Return">CHR</A>
+</LI>
+<LI>
+<A href="#OUTPUTSOL" title="Sold-out Light">SOL</A>
+</LI>
+</UL>
+</TD>
+<TD>
+[<A href="#REQ3" title="When there is no more soda in the machine, the &quot;Sold Out&quot; light will be illuminated.">3</A>]
+</TD>
+<TD>
+<A href="#IAAAQAAAQAAAQAAASO">I.SO</A>
+</TD>
+<TD>
+[]
+</TD>
+</TR>
+<TR>
+<TD>
+<A href="#STIMSS" title="Soda Select">SS</A></TD>
+<TD>
+<UL>
+<LI>
+<A href="#OUTPUTSD" title="Soda Deposited">SD</A>
+</LI>
+</UL>
+</TD>
+<TD>
+[<A href="#REQ1" title="The soda machine will produce a soda after 75 cents has been entered. The machine will only accept quarters.">1</A>]
+</TD>
+<TD>
+<A href="#IAAAQAAAQAAAQAAASS">I</A>
+</TD>
+<TD>
+[]
+</TD>
+</TR>
+</TABLE>
+<H1 id="VARIABLES">State Variables</H1>
+<UL>
+<LI id="VARIABLECOIN_COUNT"><b>COIN_COUNT</b></LI>
+<UL>
+<LI><b>Description:</b> How many quarters have been inserted into the machine.</LI>
+<LI><b>Possible Values:</b> 
+[0, 1, 2, 3]</LI>
+</UL>
+<LI id="VARIABLESODA_AVAIL"><b>SODA_AVAIL</b></LI>
+<UL>
+<LI><b>Description:</b> Indication if there is soda left to be sold.</LI>
+<LI><b>Possible Values:</b> 
+[true, false]</LI>
+</UL>
+<LI id="VARIABLESYS_STATUS"><b>SYS_STATUS</b></LI>
+<UL>
+<LI><b>Description:</b> The status of the soda machine.</LI>
+<LI><b>Possible Values:</b> 
+[ON, OFF]</LI>
+</UL>
+</UL>
+<H1 id="CSA">Canonical Sequence Analysis</H1>
+
+<TABLE border="2">
+
+<TR>
+<TH>Canonical Sequence</TH>
+<TH>COIN_COUNT</TH>
+<TH>SODA_AVAIL</TH>
+<TH>SYS_STATUS</TH>
+</TR>
+<TR>
+<TD>
+<A href="#&lt;lambda&gt;">&lt;lambda&gt;</A>
+</TD>
+<TD>SYS_STATUS = OFF</TD>
+<TD>COIN_COUNT = [ANY]</TD>
+<TD>SODA_AVAIL = [ANY]</TD>
+</TR>
+<TR>
+<TD>
+<A href="#I">I</A>
+</TD>
+<TD>SYS_STATUS = ON</TD>
+<TD>COIN_COUNT = 0</TD>
+<TD>SODA_AVAIL = true</TD>
+</TR>
+<TR>
+<TD>
+<A href="#IAAAQ">I.Q</A>
+</TD>
+<TD>SYS_STATUS = ON</TD>
+<TD>COIN_COUNT = 1</TD>
+<TD>SODA_AVAIL = true</TD>
+</TR>
+<TR>
+<TD>
+<A href="#IAAASO">I.SO</A>
+</TD>
+<TD>SYS_STATUS = ON</TD>
+<TD>COIN_COUNT = [ANY]</TD>
+<TD>SODA_AVAIL = false</TD>
+</TR>
+<TR>
+<TD>
+<A href="#IAAAQAAAQ">I.Q.Q</A>
+</TD>
+<TD>SYS_STATUS = ON</TD>
+<TD>COIN_COUNT = 2</TD>
+<TD>SODA_AVAIL = true</TD>
+</TR>
+<TR>
+<TD>
+<A href="#IAAAQAAAQAAAQ">I.Q.Q.Q</A>
+</TD>
+<TD>SYS_STATUS = ON</TD>
+<TD>COIN_COUNT = 3</TD>
+<TD>SODA_AVAIL = true</TD>
+</TR>
+</TABLE>
+<p>The canonical sequence analysis has been completed.</p>
+<H1 id="STATEBOX">State Box Specification</H1>
+<A href="#STIMCR"><H3>Stimulus: CR, Change Return</H3></A>
+
+<TABLE border ="2">
+<TR>
+<TH colspan="3">Initial State
+<TH rowspan="2">Response
+<TH colspan="3">Final State
+</TR>
+<TR>
+<TH><A href="#VARIABLECOIN_COUNT">COIN_COUNT</A>
+<TH><A href="#VARIABLESODA_AVAIL">SODA_AVAIL</A>
+<TH><A href="#VARIABLESYS_STATUS">SYS_STATUS</A>
+<TH><A href="#VARIABLECOIN_COUNT">COIN_COUNT</A>
+<TH><A href="#VARIABLESODA_AVAIL">SODA_AVAIL</A>
+<TH><A href="#VARIABLESYS_STATUS">SYS_STATUS</A>
+</TR>
+<TR CLASS=illegal>
+<TD>[ANY]
+<TD>[ANY]
+<TD>OFF
+<TD>illegal
+<TD>&nbsp;
+<TD>&nbsp;
+<TD>&nbsp;
+<TR>
+<TD>0
+<TD>true
+<TD>ON
+<TD>
+<A href="#OUTPUTCHR">CHR</A>
+<TD>0
+<TD>true
+<TD>ON
+<TR>
+<TD>1
+<TD>true
+<TD>ON
+<TD>
+<A href="#OUTPUTCHR">CHR</A>
+<TD>0
+<TD>true
+<TD>ON
+<TR>
+<TD>[ANY]
+<TD>false
+<TD>ON
+<TD>
+<A href="#OUTPUTCHR">CHR</A>
+<TD>[ANY]
+<TD>false
+<TD>ON
+<TR>
+<TD>2
+<TD>true
+<TD>ON
+<TD>
+<A href="#OUTPUTCHR">CHR</A>
+<TD>2
+<TD>true
+<TD>ON
+<TR>
+<TD>3
+<TD>true
+<TD>ON
+<TD>
+<A href="#OUTPUTCHR">CHR</A>
+<TD>0
+<TD>true
+<TD>ON
+</TABLE>
+<A href="#STIMI"><H3>Stimulus: I, Initialize</H3></A>
+
+<TABLE border ="2">
+<TR>
+<TH colspan="3">Initial State
+<TH rowspan="2">Response
+<TH colspan="3">Final State
+</TR>
+<TR>
+<TH><A href="#VARIABLECOIN_COUNT">COIN_COUNT</A>
+<TH><A href="#VARIABLESODA_AVAIL">SODA_AVAIL</A>
+<TH><A href="#VARIABLESYS_STATUS">SYS_STATUS</A>
+<TH><A href="#VARIABLECOIN_COUNT">COIN_COUNT</A>
+<TH><A href="#VARIABLESODA_AVAIL">SODA_AVAIL</A>
+<TH><A href="#VARIABLESYS_STATUS">SYS_STATUS</A>
+</TR>
+<TR>
+<TD>[ANY]
+<TD>[ANY]
+<TD>OFF
+<TD>
+<A href="#OUTPUTLIGHT">LIGHT</A>
+<TD>0
+<TD>true
+<TD>ON
+<TR>
+<TD>0
+<TD>true
+<TD>ON
+<TD>null
+<TD>0
+<TD>true
+<TD>ON
+<TR>
+<TD>1
+<TD>true
+<TD>ON
+<TD>null
+<TD>0
+<TD>true
+<TD>ON
+<TR>
+<TD>[ANY]
+<TD>false
+<TD>ON
+<TD>null
+<TD>0
+<TD>true
+<TD>ON
+<TR>
+<TD>2
+<TD>true
+<TD>ON
+<TD>null
+<TD>0
+<TD>true
+<TD>ON
+<TR>
+<TD>3
+<TD>true
+<TD>ON
+<TD>null
+<TD>0
+<TD>true
+<TD>ON
+</TABLE>
+<A href="#STIMQ"><H3>Stimulus: Q, Quarter</H3></A>
+
+<TABLE border ="2">
+<TR>
+<TH colspan="3">Initial State
+<TH rowspan="2">Response
+<TH colspan="3">Final State
+</TR>
+<TR>
+<TH><A href="#VARIABLECOIN_COUNT">COIN_COUNT</A>
+<TH><A href="#VARIABLESODA_AVAIL">SODA_AVAIL</A>
+<TH><A href="#VARIABLESYS_STATUS">SYS_STATUS</A>
+<TH><A href="#VARIABLECOIN_COUNT">COIN_COUNT</A>
+<TH><A href="#VARIABLESODA_AVAIL">SODA_AVAIL</A>
+<TH><A href="#VARIABLESYS_STATUS">SYS_STATUS</A>
+</TR>
+<TR CLASS=illegal>
+<TD>[ANY]
+<TD>[ANY]
+<TD>OFF
+<TD>illegal
+<TD>&nbsp;
+<TD>&nbsp;
+<TD>&nbsp;
+<TR>
+<TD>0
+<TD>true
+<TD>ON
+<TD>null
+<TD>1
+<TD>true
+<TD>ON
+<TR>
+<TD>1
+<TD>true
+<TD>ON
+<TD>null
+<TD>2
+<TD>true
+<TD>ON
+<TR>
+<TD>[ANY]
+<TD>false
+<TD>ON
+<TD>
+<A href="#OUTPUTCHR">CHR</A>
+<TD>[ANY]
+<TD>false
+<TD>ON
+<TR>
+<TD>2
+<TD>true
+<TD>ON
+<TD>null
+<TD>3
+<TD>true
+<TD>ON
+<TR>
+<TD>3
+<TD>true
+<TD>ON
+<TD>null
+<TD>3
+<TD>true
+<TD>ON
+</TABLE>
+<A href="#STIMSO"><H3>Stimulus: SO, Sold Out</H3></A>
+
+<TABLE border ="2">
+<TR>
+<TH colspan="3">Initial State
+<TH rowspan="2">Response
+<TH colspan="3">Final State
+</TR>
+<TR>
+<TH><A href="#VARIABLECOIN_COUNT">COIN_COUNT</A>
+<TH><A href="#VARIABLESODA_AVAIL">SODA_AVAIL</A>
+<TH><A href="#VARIABLESYS_STATUS">SYS_STATUS</A>
+<TH><A href="#VARIABLECOIN_COUNT">COIN_COUNT</A>
+<TH><A href="#VARIABLESODA_AVAIL">SODA_AVAIL</A>
+<TH><A href="#VARIABLESYS_STATUS">SYS_STATUS</A>
+</TR>
+<TR CLASS=illegal>
+<TD>[ANY]
+<TD>[ANY]
+<TD>OFF
+<TD>illegal
+<TD>&nbsp;
+<TD>&nbsp;
+<TD>&nbsp;
+<TR>
+<TD>0
+<TD>true
+<TD>ON
+<TD>
+<A href="#OUTPUTSOL">SOL</A>
+<TD>[ANY]
+<TD>false
+<TD>ON
+<TR>
+<TD>1
+<TD>true
+<TD>ON
+<TD>
+<A href="#OUTPUTSOL">SOL</A>
+<A href="#OUTPUTCHR">CHR</A>
+<TD>[ANY]
+<TD>false
+<TD>ON
+<TR>
+<TD>[ANY]
+<TD>false
+<TD>ON
+<TD>null
+<TD>[ANY]
+<TD>false
+<TD>ON
+<TR>
+<TD>2
+<TD>true
+<TD>ON
+<TD>
+<A href="#OUTPUTCHR">CHR</A>
+<A href="#OUTPUTSOL">SOL</A>
+<TD>[ANY]
+<TD>false
+<TD>ON
+<TR>
+<TD>3
+<TD>true
+<TD>ON
+<TD>
+<A href="#OUTPUTCHR">CHR</A>
+<A href="#OUTPUTSOL">SOL</A>
+<TD>[ANY]
+<TD>false
+<TD>ON
+</TABLE>
+<A href="#STIMSS"><H3>Stimulus: SS, Soda Select</H3></A>
+
+<TABLE border ="2">
+<TR>
+<TH colspan="3">Initial State
+<TH rowspan="2">Response
+<TH colspan="3">Final State
+</TR>
+<TR>
+<TH><A href="#VARIABLECOIN_COUNT">COIN_COUNT</A>
+<TH><A href="#VARIABLESODA_AVAIL">SODA_AVAIL</A>
+<TH><A href="#VARIABLESYS_STATUS">SYS_STATUS</A>
+<TH><A href="#VARIABLECOIN_COUNT">COIN_COUNT</A>
+<TH><A href="#VARIABLESODA_AVAIL">SODA_AVAIL</A>
+<TH><A href="#VARIABLESYS_STATUS">SYS_STATUS</A>
+</TR>
+<TR CLASS=illegal>
+<TD>[ANY]
+<TD>[ANY]
+<TD>OFF
+<TD>illegal
+<TD>&nbsp;
+<TD>&nbsp;
+<TD>&nbsp;
+<TR>
+<TD>0
+<TD>true
+<TD>ON
+<TD>null
+<TD>0
+<TD>true
+<TD>ON
+<TR>
+<TD>1
+<TD>true
+<TD>ON
+<TD>null
+<TD>1
+<TD>true
+<TD>ON
+<TR>
+<TD>[ANY]
+<TD>false
+<TD>ON
+<TD>null
+<TD>[ANY]
+<TD>false
+<TD>ON
+<TR>
+<TD>2
+<TD>true
+<TD>ON
+<TD>null
+<TD>2
+<TD>true
+<TD>ON
+<TR>
+<TD>3
+<TD>true
+<TD>ON
+<TD>
+<A href="#OUTPUTSD">SD</A>
+<TD>0
+<TD>true
+<TD>ON
+</TABLE>
+</HTML>

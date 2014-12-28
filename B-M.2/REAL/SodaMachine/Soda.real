@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<edu.utk.sqrl.real:Enumeration xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:edu.utk.sqrl.real="http:///edu/utk/sqrl/real.ecore" title="Soda Machine System" description="Specification of the ">
+  <requirements tag="1" text="The soda machine will produce a soda after 75 cents has been entered. The machine will only accept quarters."/>
+  <requirements tag="2" text="When the &quot;Change Return&quot; button is pressed, the available change in the input tray is returned."/>
+  <requirements tag="3" text="When there is no more soda in the machine, the &quot;Sold Out&quot; light will be illuminated."/>
+  <requirements tag="4"/>
+  <requirements tag="D1" text="Selecting a soda before the correct change has been entered will result in no response from the soda machine."/>
+  <requirements tag="D2" text="A &quot;Sold Out&quot; stimulus before the last soda is selected will cause the &quot;Sold Out&quot; light to be illuminated."/>
+  <requirements tag="D3" text="Whenever the &quot;Sold Out&quot; light is illuminated, any change deposited into the machine will automatically be returned."/>
+  <requirements tag="D4" text="The soda select button will be ignored whenever the &quot;Sold Out&quot; light is on or whenever correct change has not been received."/>
+  <requirements tag="D5"/>
+  <requirements tag="D6"/>
+  <stimuli shortName="I" longName="Initialize" description="The power button has been pressed." sources="Power-Button" requirements="//@requirements.3"/>
+  <stimuli shortName="Q" longName="Quarter" description="Money has been inserted into the machine." sources="Quarter-In" requirements="//@requirements.0"/>
+  <stimuli shortName="SS" longName="Soda Select" description="The soda select button has been pressed." sources="Soda-Select-Button" requirements="//@requirements.0"/>
+  <stimuli shortName="CR" longName="Change Return" description="The change return button has been pressed." sources="Change-Return-Button" requirements="//@requirements.1"/>
+  <stimuli shortName="SO" longName="Sold Out" description="The last soda has been sold." sources="Sold-Out-Indication" requirements="//@requirements.2"/>
+  <outputs name="SD" description="The soda is deposited in the tray." requirements="//@requirements.0" longName="Soda Deposited" destinations="Soda-Out"/>
+  <outputs name="CHR" description="The change is returned to the customer." requirements="//@requirements.1" longName="Change Return" destinations="Change-Tray"/>
+  <outputs name="SOL" description="The sold-out light is turned on." requirements="//@requirements.2" longName="Sold-out Light" destinations="Sold-Out-Light"/>
+  <outputs name="LIGHT" description="The power-on light is turned on." requirements="//@requirements.3" longName="Power-on Light" destinations="Power-Light"/>
+  <interfaces name="Quarter-In" description="The input in which the quarters are inserted." requirements="//@requirements.0"/>
+  <interfaces name="Soda-Out" description="The tray used to collect the soda selected from the machine." requirements="//@requirements.0"/>
+  <interfaces name="Soda-Select-Button" description="The button used to select the soda." requirements="//@requirements.0"/>
+  <interfaces name="Change-Return-Button" description="The button used to request the change return." requirements="//@requirements.1"/>
+  <interfaces name="Change-Tray" description="The tray used to collect the change after it has been requested." requirements="//@requirements.1"/>
+  <interfaces name="Sold-Out-Light" description="The light that indicates that the soda has been sold out." requirements="//@requirements.2"/>
+  <interfaces name="Power-Light" description="The light that indicates that machine is powered." requirements="//@requirements.3"/>
+  <interfaces name="Power-Button" description="The button used to initialize the machine." requirements="//@requirements.3"/>
+  <interfaces name="Sold-Out-Indication" description="The internal indication that the last soda in the machine has been delivered." requirements="//@requirements.2"/>
+  <mappings prefix="//@lambdaSequence" sequenceState="//@states.1" responses="//@outputs.3" responseTrace="//@requirements.3" legal="true">
+    <action stimulus="//@stimuli.0"/>
+  </mappings>
+  <mappings prefix="//@lambdaSequence">
+    <action stimulus="//@stimuli.1"/>
+  </mappings>
+  <mappings prefix="//@lambdaSequence">
+    <action stimulus="//@stimuli.2"/>
+  </mappings>
+  <mappings prefix="//@lambdaSequence">
+    <action stimulus="//@stimuli.3"/>
+  </mappings>
+  <mappings prefix="//@lambdaSequence">
+    <action stimulus="//@stimuli.4"/>
+  </mappings>
+  <mappings prefix="//@mappings.0" responseTrace="//@requirements.3" legal="true" equivalence="//@states.1">
+    <action stimulus="//@stimuli.0"/>
+  </mappings>
+  <mappings prefix="//@mappings.0" sequenceState="//@states.2" responseTrace="//@requirements.0" legal="true">
+    <action stimulus="//@stimuli.1"/>
+  </mappings>
+  <mappings prefix="//@mappings.0" responseTrace="//@requirements.4" legal="true" equivalence="//@states.1">
+    <action stimulus="//@stimuli.2"/>
+  </mappings>
+  <mappings prefix="//@mappings.0" responses="//@outputs.1" responseTrace="//@requirements.1" legal="true" equivalence="//@states.1">
+    <action stimulus="//@stimuli.3"/>
+  </mappings>
+  <mappings prefix="//@mappings.0" sequenceState="//@states.3" responses="//@outputs.2" responseTrace="//@requirements.5" legal="true">
+    <action stimulus="//@stimuli.4"/>
+  </mappings>
+  <mappings prefix="//@mappings.6" responseTrace="//@requirements.3" legal="true" equivalence="//@states.1">
+    <action stimulus="//@stimuli.0"/>
+  </mappings>
+  <mappings prefix="//@mappings.6" sequenceState="//@states.4" responseTrace="//@requirements.0" legal="true">
+    <action stimulus="//@stimuli.1"/>
+  </mappings>
+  <mappings prefix="//@mappings.6" responseTrace="//@requirements.4" legal="true" equivalence="//@states.2">
+    <action stimulus="//@stimuli.2"/>
+  </mappings>
+  <mappings prefix="//@mappings.6" responses="//@outputs.1" responseTrace="//@requirements.1" legal="true" equivalence="//@states.1">
+    <action stimulus="//@stimuli.3"/>
+  </mappings>
+  <mappings prefix="//@mappings.6" responses="//@outputs.2 //@outputs.1" responseTrace="//@requirements.5" legal="true" equivalence="//@states.3">
+    <action stimulus="//@stimuli.4"/>
+  </mappings>
+  <mappings prefix="//@mappings.9" responseTrace="//@requirements.3" legal="true" equivalence="//@states.1">
+    <action stimulus="//@stimuli.0"/>
+  </mappings>
+  <mappings prefix="//@mappings.9" responses="//@outputs.1" responseTrace="//@requirements.6" legal="true" equivalence="//@states.3">
+    <action stimulus="//@stimuli.1"/>
+  </mappings>
+  <mappings prefix="//@mappings.9" responseTrace="//@requirements.7" legal="true" equivalence="//@states.3">
+    <action stimulus="//@stimuli.2"/>
+  </mappings>
+  <mappings prefix="//@mappings.9" responses="//@outputs.1" responseTrace="//@requirements.8" legal="true" equivalence="//@states.3">
+    <action stimulus="//@stimuli.3"/>
+  </mappings>
+  <mappings prefix="//@mappings.9" responseTrace="//@requirements.9" legal="true" equivalence="//@states.3">
+    <action stimulus="//@stimuli.4"/>
+  </mappings>
+  <mappings prefix="//@mappings.11" responseTrace="//@requirements.3" legal="true" equivalence="//@states.1">
+    <action stimulus="//@stimuli.0"/>
+  </mappings>
+  <mappings prefix="//@mappings.11" sequenceState="//@states.5" responseTrace="//@requirements.0" legal="true">
+    <action stimulus="//@stimuli.1"/>
+  </mappings>
+  <mappings prefix="//@mappings.11" responseTrace="//@requirements.7" legal="true" equivalence="//@states.4">
+    <action stimulus="//@stimuli.2"/>
+  </mappings>
+  <mappings prefix="//@mappings.11" responses="//@outputs.1" responseTrace="//@requirements.1" legal="true" equivalence="//@states.4">
+    <action stimulus="//@stimuli.3"/>
+  </mappings>
+  <mappings prefix="//@mappings.11" responses="//@outputs.1 //@outputs.2" responseTrace="//@requirements.5" legal="true" equivalence="//@states.3">
+    <action stimulus="//@stimuli.4"/>
+  </mappings>
+  <mappings prefix="//@mappings.21" responseTrace="//@requirements.3" legal="true" equivalence="//@states.1">
+    <action stimulus="//@stimuli.0"/>
+  </mappings>
+  <mappings prefix="//@mappings.21" responseTrace="//@requirements.0" legal="true" equivalence="//@states.5">
+    <action stimulus="//@stimuli.1"/>
+  </mappings>
+  <mappings prefix="//@mappings.21" responses="//@outputs.0" responseTrace="//@requirements.0" legal="true" equivalence="//@states.1">
+    <action stimulus="//@stimuli.2"/>
+  </mappings>
+  <mappings prefix="//@mappings.21" responses="//@outputs.1" responseTrace="//@requirements.1" legal="true" equivalence="//@states.1">
+    <action stimulus="//@stimuli.3"/>
+  </mappings>
+  <mappings prefix="//@mappings.21" responses="//@outputs.1 //@outputs.2" responseTrace="//@requirements.2" legal="true" equivalence="//@states.3">
+    <action stimulus="//@stimuli.4"/>
+  </mappings>
+  <states canonicalSequence="//@lambdaSequence" mappings="//@mappings.0 //@mappings.1 //@mappings.2 //@mappings.3 //@mappings.4">
+    <stateVarValues value="OFF" variable="//@stateVariables.0"/>
+    <stateVarValues value="[ANY]" variable="//@stateVariables.1"/>
+    <stateVarValues value="[ANY]" variable="//@stateVariables.2"/>
+  </states>
+  <states canonicalSequence="//@mappings.0" mappings="//@mappings.5 //@mappings.6 //@mappings.7 //@mappings.8 //@mappings.9">
+    <stateVarValues value="ON" variable="//@stateVariables.0"/>
+    <stateVarValues value="0" variable="//@stateVariables.1"/>
+    <stateVarValues value="true" variable="//@stateVariables.2"/>
+  </states>
+  <states canonicalSequence="//@mappings.6" mappings="//@mappings.10 //@mappings.11 //@mappings.12 //@mappings.13 //@mappings.14">
+    <stateVarValues value="ON" variable="//@stateVariables.0"/>
+    <stateVarValues value="1" variable="//@stateVariables.1"/>
+    <stateVarValues value="true" variable="//@stateVariables.2"/>
+  </states>
+  <states canonicalSequence="//@mappings.9" mappings="//@mappings.15 //@mappings.16 //@mappings.17 //@mappings.18 //@mappings.19">
+    <stateVarValues value="ON" variable="//@stateVariables.0"/>
+    <stateVarValues value="[ANY]" variable="//@stateVariables.1"/>
+    <stateVarValues value="false" variable="//@stateVariables.2"/>
+  </states>
+  <states canonicalSequence="//@mappings.11" mappings="//@mappings.20 //@mappings.21 //@mappings.22 //@mappings.23 //@mappings.24">
+    <stateVarValues value="ON" variable="//@stateVariables.0"/>
+    <stateVarValues value="2" variable="//@stateVariables.1"/>
+    <stateVarValues value="true" variable="//@stateVariables.2"/>
+  </states>
+  <states canonicalSequence="//@mappings.21" mappings="//@mappings.25 //@mappings.26 //@mappings.27 //@mappings.28 //@mappings.29">
+    <stateVarValues value="ON" variable="//@stateVariables.0"/>
+    <stateVarValues value="3" variable="//@stateVariables.1"/>
+    <stateVarValues value="true" variable="//@stateVariables.2"/>
+  </states>
+  <stateVariables name="SYS_STATUS" description="The status of the soda machine.">
+    <values>ON</values>
+    <values>OFF</values>
+  </stateVariables>
+  <stateVariables name="COIN_COUNT" description="How many quarters have been inserted into the machine.">
+    <values>0</values>
+    <values>1</values>
+    <values>2</values>
+    <values>3</values>
+  </stateVariables>
+  <stateVariables name="SODA_AVAIL" description="Indication if there is soda left to be sold.">
+    <values>true</values>
+    <values>false</values>
+  </stateVariables>
+  <lambdaSequence sequenceState="//@states.0"/>
+</edu.utk.sqrl.real:Enumeration>
